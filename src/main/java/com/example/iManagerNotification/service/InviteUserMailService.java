@@ -10,29 +10,26 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
-public class PaymentConfirmationMailService {
+public class InviteUserMailService {
     @Autowired
     JavaMailSender javaMailSender;
 
     @Autowired
     TemplateEngine templateEngine;
 
-    public void sendRegistrationMail(PaymentMessageDTO payment) {
+    public void sendInviteMail(String userEmail,String orgName) {
         try {
             System.out.print("Generating meme message");
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 
             Context context = new Context();
-            context.setVariable("name",payment.getName());
-            context.setVariable("userId",payment.getId());
-            context.setVariable("subscription",payment.getSubscription());
-            context.setVariable("amount",payment.getAmount());
+            context.setVariable("orgName",orgName);
+            context.setVariable("userEmail",userEmail);
 
-
-            String htmlTemplate =templateEngine.process("paymentSuccess",context);
-            mimeMessageHelper.setTo(payment.getEmail());
-            mimeMessageHelper.setSubject("PAYMENT VERIFICATION");
+            String htmlTemplate =templateEngine.process("inviteMail",context);
+            mimeMessageHelper.setTo(userEmail);
+            mimeMessageHelper.setSubject("INVITATION MAIL");
             mimeMessageHelper.setText(htmlTemplate,true);
 
             javaMailSender.send(mimeMessage);

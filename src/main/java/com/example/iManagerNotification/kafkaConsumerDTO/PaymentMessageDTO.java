@@ -16,15 +16,26 @@ public class PaymentMessageDTO {
 
     Subscription subscription;
 
-    public PaymentMessageDTO(UUID id, String name, String email, String password, Subscription subscription) {
+    private String amount;
+
+    public PaymentMessageDTO(UUID id, String name, String email, String password, Subscription subscription, String amount) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.subscription = subscription;
+        this.amount = amount;
     }
 
     public PaymentMessageDTO() {
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public UUID getId() {

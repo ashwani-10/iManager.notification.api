@@ -16,12 +16,12 @@ public class PaymentController {
     @Autowired
     ObjectMapper objectMapper;
 
-    @KafkaListener(topics = {"user-registration"},groupId = "springboot-group-1")
+    @KafkaListener(topics = {"user-registration"},groupId = "payment-group")
     public void setPaymentMailService(ConsumerRecord<String, String> record) throws JsonProcessingException {
         String key = record.key();
         String value = record.value();
-        if(!"payment-mail".equals(key)){
-            System.out.println("key not matched in this topic");
+        if(!key.equals("payment-mail")){
+            System.out.println("key not matched in "+"payment-mail");
             return;
         }
         System.out.println("key matched: "+key);
