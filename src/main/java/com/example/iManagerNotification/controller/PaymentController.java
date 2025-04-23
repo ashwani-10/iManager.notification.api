@@ -17,7 +17,7 @@ public class PaymentController {
     ObjectMapper objectMapper;
 
     @KafkaListener(topics = {"user-registration"},groupId = "payment-group")
-    public void setPaymentMailService(ConsumerRecord<String, String> record) throws JsonProcessingException {
+    public void setPaymentMail(ConsumerRecord<String, String> record) throws JsonProcessingException {
         String key = record.key();
         String value = record.value();
         if(!key.equals("payment-mail")){
@@ -32,6 +32,5 @@ public class PaymentController {
         }catch (Exception e){
             System.out.println("Payment mail nhi gaya");
         }
-
     }
 }
